@@ -1,0 +1,69 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  * {
+    margin: 0;
+  }
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  input, button, textarea, select {
+    font: inherit;
+  }
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  #root, #__next {
+    isolation: isolate;
+  }
+
+  /* ************************************************************** */
+
+  :root{
+    --black : #000000;
+    --light-grey: #1d3849;
+    --dark-grey: #142f44;
+    --light-blue: #a2bbcf;
+    --dark-blue: #205b7a;
+  }
+
+  body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #004dff;
+  }
+
+  .calculator{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-blue);
+
+    padding: 10px;
+  }
+
+  .display{
+    color: white;
+    background-color: var(--light-grey);
+    text-align: right;
+    padding: 15px;
+  }
+
+  .buttons{
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap:10px;
+  }
+
