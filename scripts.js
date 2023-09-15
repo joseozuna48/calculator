@@ -3,6 +3,8 @@ let num1 = "";
 let num2 = "";
 let operator = "";
 
+let display = document.querySelector(".display");
+
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -44,7 +46,6 @@ function operate(operator, num1, num2) {
 }
 
 function numberListener(){
-    let display = document.querySelector(".display");
 
     if(operator){
         num2 += this.dataset.value;
@@ -56,9 +57,21 @@ function numberListener(){
     display.textContent = displayText;
 }
 
-let numbers = document.querySelectorAll(".number");
+function resetCalculator(){
+    num1="";
+    num2="";
+    operator="";
+    displayText = "";
 
+    display.textContent="0";
+}
+
+
+let numbers = document.querySelectorAll(".number");
 numbers.forEach(number=> number.addEventListener("click",numberListener) );
+
+let reset = document.querySelector(".reset");
+reset.addEventListener("click",resetCalculator);
 
 
 
