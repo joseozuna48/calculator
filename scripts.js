@@ -2,6 +2,7 @@ let displayText = "0";
 let num1 = "";
 let num2 = "";
 let operator = "";
+let clearDisplay = false;
 
 let display = document.querySelector(".display");
 
@@ -47,8 +48,9 @@ function operate(operator, num1, num2) {
 
 function numberListener(){
 
-    if(display.textContent == 0){
+    if(display.textContent == 0 || clearDisplay ){
         displayText = "";
+        clearDisplay = false;
     }
 
     displayText += this.dataset.value;
@@ -74,6 +76,16 @@ function deleteLast(){
     }
 }
 
+function operationListener(){
+    
+    if(!operator){
+        num1= displayText;
+        operator = this.dataset.value;
+        clearDisplay = true;
+    }
+}
+
+
 
 let numbers = document.querySelectorAll(".number");
 numbers.forEach(number=> number.addEventListener("click",numberListener) );
@@ -84,6 +96,8 @@ reset.addEventListener("click",resetCalculator);
 let deleteKey = document.querySelector(".delete");
 deleteKey.addEventListener("click",deleteLast);
 
+let operators = document.querySelectorAll(".operator");
+operators.forEach(operation=> operation.addEventListener("click",operationListener) );
 
 
 
