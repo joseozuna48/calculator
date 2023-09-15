@@ -1,5 +1,6 @@
-let num1 = 0;
-let num2 = 0;
+let displayText = "";
+let num1 = "";
+let num2 = "";
 let operator = "";
 
 function add(num1, num2) {
@@ -42,5 +43,22 @@ function operate(operator, num1, num2) {
     return result;
 }
 
-console.log(operate("/",2,3));
+function numberListener(){
+    let display = document.querySelector(".display");
+
+    if(operator){
+        num2 += this.dataset.value;
+    }else{
+        num1 += this.dataset.value;
+    }
+
+    displayText += this.dataset.value
+    display.textContent = displayText;
+}
+
+let numbers = document.querySelectorAll(".number");
+
+numbers.forEach(number=> number.addEventListener("click",numberListener) );
+
+
 
