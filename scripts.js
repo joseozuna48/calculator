@@ -1,4 +1,4 @@
-let displayText = "";
+let displayText = "0";
 let num1 = "";
 let num2 = "";
 let operator = "";
@@ -47,13 +47,11 @@ function operate(operator, num1, num2) {
 
 function numberListener(){
 
-    if(operator){
-        num2 += this.dataset.value;
-    }else{
-        num1 += this.dataset.value;
+    if(display.textContent == 0){
+        displayText = "";
     }
 
-    displayText += this.dataset.value
+    displayText += this.dataset.value;
     display.textContent = displayText;
 }
 
@@ -61,9 +59,19 @@ function resetCalculator(){
     num1="";
     num2="";
     operator="";
-    displayText = "";
+    displayText = "0";
 
     display.textContent="0";
+}
+
+function deleteLast(){
+    if(displayText.length !=1){
+        displayText = displayText.slice(0,-1);
+        display.textContent = displayText;
+    }else{
+        displayText = "0";
+        display.textContent = displayText;
+    }
 }
 
 
@@ -72,6 +80,10 @@ numbers.forEach(number=> number.addEventListener("click",numberListener) );
 
 let reset = document.querySelector(".reset");
 reset.addEventListener("click",resetCalculator);
+
+let deleteKey = document.querySelector(".delete");
+deleteKey.addEventListener("click",deleteLast);
+
 
 
 
