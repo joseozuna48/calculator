@@ -55,7 +55,8 @@ function numberListener(){
     }
 
     if(operator){
-        num2= num2 +""+ this.dataset.value;
+        if(num2=="0") num2="";
+        num2= num2 + this.dataset.value;
         display.textContent = `${num1} ${operator} ${num2}`;
 
     }else{
@@ -82,10 +83,10 @@ function deleteLast(){
 
     if(num2){
         num2 = num2.slice(0,-1);
-        display.textContent = num2;
+        display.textContent = `${num1} ${operator}`;
 
         if(num2==""){
-            display.textContent = history.textContent;
+            display.textContent = `${num1} ${operator}`;
             history.textContent = "";
         }; 
 
@@ -106,10 +107,12 @@ function deleteLast(){
 
 function operationListener(){
 
+
     if(operator && num1 && num2){
         equals();
         operator = this.dataset.value;
         //we use result value because equals asigns the value to the result variable
+        //and currently num1 == ""
         display.textContent = `${result} ${operator}`;
     }
 
@@ -134,7 +137,7 @@ function equals(){
         let operation = operate(operator,+num1,+num2);
 
         resetCalculator();
-        result = operation;
+        result = operation+"";
         display.textContent=result;
         history.textContent = historyString;
     }
