@@ -72,16 +72,30 @@ function resetCalculator(){
 }
 
 function deleteLast(){
-    if(displayText.length !=1){
-        displayText = displayText.slice(0,-1);
-        display.textContent = displayText;
-    }else{
-        displayText = "0";
-        display.textContent = displayText;
+
+    if(num2){
+        num2 = num2.slice(0,-1);
+        display.textContent = num2;
+
+        if(num2=="")display.textContent = num1; 
+
+    }else if(operator){
+        operator = "";
+        display.textContent = num1; 
+
+    }else if(num1){
+        num1 = num1.slice(0,-1);
+        display.textContent = num1;
+
+        if(num1 == "") display.textContent = 0;
     }
 }
 
 function operationListener(){
+    // In  case we want to operate on a previous calculated value
+    if(result){
+        num1 = result;
+    }
 
     if(!operator && num1){
         operator = this.dataset.value;
