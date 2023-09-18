@@ -105,6 +105,14 @@ function deleteLast(){
 }
 
 function operationListener(){
+
+    if(operator && num1 && num2){
+        equals();
+        operator = this.dataset.value;
+        //we use result value because equals asigns the value to the result variable
+        display.textContent = `${result} ${operator}`;
+    }
+
     // In  case we want to operate on a previous calculated value
     if(result){
         num1 = result;
@@ -116,7 +124,6 @@ function operationListener(){
         clearDisplay = true;
         display.textContent = `${num1} ${operator}`;
     }
-
 
 }
 
