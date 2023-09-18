@@ -60,6 +60,7 @@ function numberListener(){
         display.textContent = `${num1} ${operator} ${num2}`;
 
     }else{
+        if(num1=="0") num1="";
         num1=  num1 + "" + this.dataset.value;
         display.textContent = num1;
 
@@ -83,7 +84,7 @@ function deleteLast(){
 
     if(num2){
         num2 = num2.slice(0,-1);
-        display.textContent = `${num1} ${operator}`;
+        display.textContent = `${num1} ${operator} ${num2}`;
 
         if(num2==""){
             display.textContent = `${num1} ${operator}`;
@@ -107,11 +108,13 @@ function deleteLast(){
 
 function operationListener(){
 
+    //In the user wants to operate with the initial 0 value
+    if(!num1) num1="0";
 
     if(operator && num1 && num2){
         equals();
         operator = this.dataset.value;
-        //we use result value because equals asigns the value to the result variable
+        //we use result value because equals assigns the value to the result variable
         //and currently num1 == ""
         display.textContent = `${result} ${operator}`;
     }
@@ -127,6 +130,8 @@ function operationListener(){
         clearDisplay = true;
         display.textContent = `${num1} ${operator}`;
     }
+
+    
 
 }
 
