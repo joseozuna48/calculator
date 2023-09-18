@@ -4,6 +4,7 @@ let operator = "";
 let result = "";
 let clearDisplay = false;
 
+let history = document.querySelector(".history");
 let display = document.querySelector(".display");
 
 function add(num1, num2) {
@@ -55,10 +56,15 @@ function numberListener(){
 
     if(operator){
         num2= num2 +""+ this.dataset.value;
-        display.textContent = num2;
+        display.textContent = `${num1} ${operator} ${num2}`;
+
     }else{
         num1=  num1 + "" + this.dataset.value;
         display.textContent = num1;
+
+        //In case we computed a result and we wont use that number for successive calculations
+        history.textContent = "";
+        result="";
     }
 }
 
@@ -69,6 +75,7 @@ function resetCalculator(){
     result = "";
 
     display.textContent="0";
+    history.textContent="";
 }
 
 function deleteLast(){
@@ -77,7 +84,10 @@ function deleteLast(){
         num2 = num2.slice(0,-1);
         display.textContent = num2;
 
-        if(num2=="")display.textContent = num1; 
+        if(num2==""){
+            display.textContent = history.textContent;
+            history.textContent = "";
+        }; 
 
     }else if(operator){
         operator = "";
@@ -88,6 +98,9 @@ function deleteLast(){
         display.textContent = num1;
 
         if(num1 == "") display.textContent = 0;
+
+    }else if(result){//In case the number we want to delete is the result of a previous operation
+        resetCalculator();
     }
 }
 
@@ -95,20 +108,28 @@ function operationListener(){
     // In  case we want to operate on a previous calculated value
     if(result){
         num1 = result;
+        history.textContent = `ans = ${num1}`;
     }
 
     if(!operator && num1){
         operator = this.dataset.value;
         clearDisplay = true;
+        display.textContent = `${num1} ${operator}`;
     }
+
+
 }
 
 function equals(){
     if(operator && num1 && num2){
+
+        let historyString = `${num1} ${operator} ${num2}`;
         let operation = operate(operator,+num1,+num2);
+
         resetCalculator();
         result = operation;
         display.textContent=result;
+        history.textContent = historyString;
     }
     
 }
