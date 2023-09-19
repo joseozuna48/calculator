@@ -52,7 +52,7 @@
     background-color: var(--dark-blue);
     font-size: 20px;
 
-    min-width:350px;
+    min-width:300px;
     padding: 10px;
 
     box-shadow: 10px 10px 5px var(--light-grey);
