@@ -145,7 +145,12 @@ function equals(){
         result = operation+"";
         display.textContent=result;
         history.textContent = historyString;
+    }else if(result){
+        num1=result;
+        history.textContent = `ans = ${num1}`;
     }
+
+
     
 }
 
