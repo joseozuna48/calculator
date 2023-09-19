@@ -100,10 +100,10 @@ function deleteLast() {
     }
 }
 
-function operationListener() {
+function operationListener(operation) {
 
     //Adds negative 
-    if(this.dataset.value =="-" && (!num1 || !num2) ){
+    if(operation =="-" && (!num1 || !num2) ){
         
         if(!num1){
             num1="-";
@@ -126,13 +126,13 @@ function operationListener() {
 
 
     if (!operator && (num1 && num1!="-" ) ) {
-        operator = this.dataset.value;
+        operator = operation;
         display.textContent = `${num1} ${operator} ${num2}`;
 
     } else if (operator && num1 && (num2 && num2!="-" ) ) {
 
         equals();
-        operator = this.dataset.value;
+        operator = operation;
         //we use result value because equals assigns the value to the result variable
         //and currently num1 == ""
         display.textContent = `${result} ${operator}`;
@@ -194,7 +194,9 @@ let deleteKey = document.querySelector(".delete");
 deleteKey.addEventListener("click", deleteLast);
 
 let operators = document.querySelectorAll(".operator");
-operators.forEach(operation => operation.addEventListener("click",operationListener));
+operators.forEach(operation => operation.addEventListener("click",(event)=>{
+    operationListener(event.target.dataset.value);
+}));
 
 let equal = document.querySelector(".equals");
 equal.addEventListener("click", equals);
@@ -208,6 +210,29 @@ document.addEventListener("keydown",(event)=>{
         numberListener(event.key);
     }
 
-    // console.log(event.key);
+    switch(event.key){
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+            operationListener(event.key);
+        break;
+
+        case 'Enter':
+            equals();
+            break;
+
+        case '.':
+            addDecimal();
+            break;
+
+        case 'Backspace':
+            deleteLast();
+        break;
+
+        case 'Escape':
+            resetCalculator();
+            break;
+    }
 })
 
