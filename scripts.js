@@ -148,9 +148,17 @@ function equals() {
         let operation = operate(operator, +num1, +num2);
 
         resetCalculator();
-        result = operation + "";
-        display.textContent = result;
+
+        if(isFinite(operation)){
+            result = operation + "";
+            display.textContent = result;
+        }else{
+            result = "";
+            display.textContent = "Can't do that 😡"
+        }
+
         history.textContent = historyString;
+
     } else if (result) {
         num1 = result;
         history.textContent = `ans = ${num1}`;
