@@ -44,7 +44,7 @@ function operate(operator, num1, num2) {
             break;
     }
 
-    return (result%1 != 0)? result.toFixed(4): result ;
+    return (result % 1 != 0) ? result.toFixed(4) : result;
 }
 
 function numberListener() {
@@ -60,7 +60,7 @@ function numberListener() {
         display.textContent = `${num1} ${operator} ${num2}`;
 
     } else {
-        if (num1 == "0") num1 = "";
+        if (num1 == "0") num1 = "";//Prevents numbers starting with 0
         num1 = num1 + "" + this.dataset.value;
         display.textContent = num1;
 
@@ -108,16 +108,21 @@ function deleteLast() {
 
 function operationListener() {
 
+    //Adds negative 
+    if(this.dataset.value =="-" && (!num1 || !num2) ){
+        
+        if(!num1){
+            num1="-";
+        }else if( operator && !num2 ){
+            num2 ="-";
+        }
+
+        display.textContent = `${num1} ${operator} ${num2}`;
+    }
+
     //In the user wants to operate with the initial 0 value
     if (!num1) num1 = "0";
 
-    if (operator && num1 && num2) {
-        equals();
-        operator = this.dataset.value;
-        //we use result value because equals assigns the value to the result variable
-        //and currently num1 == ""
-        display.textContent = `${result} ${operator}`;
-    }
 
     // In  case we want to operate on a previous calculated value
     if (result) {
@@ -125,13 +130,21 @@ function operationListener() {
         history.textContent = `ans = ${num1}`;
     }
 
-    if (!operator && num1) {
+
+    if (!operator && (num1 && num1!="-" ) ) {
         operator = this.dataset.value;
         clearDisplay = true;
-        display.textContent = `${num1} ${operator}`;
-    }
+        display.textContent = `${num1} ${operator} ${num2}`;
 
+    } else if (operator && num1 && (num2 && num2!="-" ) ) {
 
+        equals();
+        operator = this.dataset.value;
+        //we use result value because equals assigns the value to the result variable
+        //and currently num1 == ""
+        display.textContent = `${result} ${operator}`;
+
+    } 
 
 }
 
@@ -152,22 +165,22 @@ function equals() {
 
 }
 
-function addDecimal(){
+function addDecimal() {
 
-    if(operator){
+    if (operator) {
 
-        if(num2==""){
-            num2="0."
-        }else{
-            if(!num2.includes(".")) num2+=".";
+        if (num2 == "") {
+            num2 = "0."
+        } else {
+            if (!num2.includes(".")) num2 += ".";
         }
 
-    }else{
+    } else {
 
-        if(num1==""){
-            num1="0."
-        }else{
-            if(!num1.includes(".")) num1+=".";
+        if (num1 == "") {
+            num1 = "0."
+        } else {
+            if (!num1.includes(".")) num1 += ".";
         }
     }
 
@@ -192,7 +205,7 @@ let equal = document.querySelector(".equals");
 equal.addEventListener("click", equals);
 
 let decimal = document.querySelector(".decimal");
-decimal.addEventListener("click",addDecimal );
+decimal.addEventListener("click", addDecimal);
 
 
 
