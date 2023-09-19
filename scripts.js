@@ -47,15 +47,15 @@ function operate(operator, num1, num2) {
     return (result % 1 != 0) ? result.toFixed(2) : result;
 }
 
-function numberListener() {
+function numberListener(value) {
     if (operator) {
         if (num2 == "0") num2 = "";
-        num2 = num2 + this.dataset.value;
+        num2 = num2 + value;
         display.textContent = `${num1} ${operator} ${num2}`;
 
     } else {
         if (num1 == "0") num1 = "";//Prevents numbers starting with 0
-        num1 = num1 + "" + this.dataset.value;
+        num1 = num1 + "" + value;
         display.textContent = num1;
 
         //In case we computed a result and we wont use that number for successive calculations
@@ -183,7 +183,9 @@ function addDecimal() {
 
 
 let numbers = document.querySelectorAll(".number");
-numbers.forEach(number => number.addEventListener("click", numberListener));
+numbers.forEach(number => number.addEventListener("click",(event)=>{
+    numberListener(event.target.dataset.value);
+}  ));
 
 let reset = document.querySelector(".reset");
 reset.addEventListener("click", resetCalculator);
@@ -192,7 +194,7 @@ let deleteKey = document.querySelector(".delete");
 deleteKey.addEventListener("click", deleteLast);
 
 let operators = document.querySelectorAll(".operator");
-operators.forEach(operation => operation.addEventListener("click", operationListener));
+operators.forEach(operation => operation.addEventListener("click",operationListener));
 
 let equal = document.querySelector(".equals");
 equal.addEventListener("click", equals);
@@ -201,4 +203,11 @@ let decimal = document.querySelector(".decimal");
 decimal.addEventListener("click", addDecimal);
 
 
+document.addEventListener("keydown",(event)=>{
+    if(event.key >= 0 && event.key <=9){
+        numberListener(event.key);
+    }
+
+    // console.log(event.key);
+})
 
