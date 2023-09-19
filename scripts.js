@@ -44,7 +44,7 @@ function operate(operator, num1, num2) {
             break;
     }
 
-    return result;
+    return (result%1 != 0)? result.toFixed(4): result ;
 }
 
 function numberListener() {
