@@ -36,82 +36,82 @@ function operate(operator, num1, num2) {
             break;
 
         case "*":
-            result = multiply(num1,num2);
+            result = multiply(num1, num2);
             break;
 
         case "/":
-            result = divide(num1,num2);
+            result = divide(num1, num2);
             break;
     }
 
     return result;
 }
 
-function numberListener(){
+function numberListener() {
 
-    if(display.textContent == "0" || clearDisplay ){
+    if (display.textContent == "0" || clearDisplay) {
         display.textContent = 0;
         clearDisplay = false;
     }
 
-    if(operator){
-        if(num2=="0") num2="";
-        num2= num2 + this.dataset.value;
+    if (operator) {
+        if (num2 == "0") num2 = "";
+        num2 = num2 + this.dataset.value;
         display.textContent = `${num1} ${operator} ${num2}`;
 
-    }else{
-        if(num1=="0") num1="";
-        num1=  num1 + "" + this.dataset.value;
+    } else {
+        if (num1 == "0") num1 = "";
+        num1 = num1 + "" + this.dataset.value;
         display.textContent = num1;
 
         //In case we computed a result and we wont use that number for successive calculations
         history.textContent = "";
-        result="";
+        result = "";
     }
 }
 
-function resetCalculator(){
-    num1="";
-    num2="";
-    operator="";
+function resetCalculator() {
+    num1 = "";
+    num2 = "";
+    operator = "";
     result = "";
 
-    display.textContent="0";
-    history.textContent="";
+    display.textContent = "0";
+    history.textContent = "";
 }
 
-function deleteLast(){
+function deleteLast() {
 
-    if(num2){
-        num2 = num2.slice(0,-1);
+    if (num2) {
+        num2 = num2.slice(0, -1);
         display.textContent = `${num1} ${operator} ${num2}`;
 
-        if(num2==""){
+        if (num2 == "") {
             display.textContent = `${num1} ${operator}`;
             history.textContent = "";
-        }; 
+        };
 
-    }else if(operator){
+    } else if (operator) {
         operator = "";
-        display.textContent = num1; 
-
-    }else if(num1){
-        num1 = num1.slice(0,-1);
         display.textContent = num1;
 
-        if(num1 == "") display.textContent = 0;
+    } else if (num1) {
+        num1 = num1.slice(0, -1);
+        display.textContent = num1;
 
-    }else if(result){//In case the number we want to delete is the result of a previous operation
+        if (num1 == "") display.textContent = 0;
+
+    } else if (result) {//In case the number we want to delete is the result of a previous operation
         resetCalculator();
     }
 }
 
-function operationListener(){
+function operationListener() {
 
     //In the user wants to operate with the initial 0 value
-    if(!num1) num1="0";
+    if (!num1) num1 = "0";
 
-    if(operator && num1 && num2){
+    if (operator && num1 && num2) {
         equals();
         operator = this.dataset.value;
         //we use result value because equals assigns the value to the result variable
@@ -120,56 +120,79 @@ function operationListener(){
     }
 
     // In  case we want to operate on a previous calculated value
-    if(result){
+    if (result) {
         num1 = result;
         history.textContent = `ans = ${num1}`;
     }
 
-    if(!operator && num1){
+    if (!operator && num1) {
         operator = this.dataset.value;
         clearDisplay = true;
         display.textContent = `${num1} ${operator}`;
     }
 
-    
+
 
 }
 
-function equals(){
-    if(operator && num1 && num2){
+function equals() {
+    if (operator && num1 && num2) {
 
         let historyString = `${num1} ${operator} ${num2}`;
-        let operation = operate(operator,+num1,+num2);
+        let operation = operate(operator, +num1, +num2);
 
         resetCalculator();
-        result = operation+"";
-        display.textContent=result;
+        result = operation + "";
+        display.textContent = result;
         history.textContent = historyString;
-    }else if(result){
-        num1=result;
+    } else if (result) {
+        num1 = result;
         history.textContent = `ans = ${num1}`;
     }
 
+}
 
-    
+function addDecimal(){
+
+    if(operator){
+
+        if(num2==""){
+            num2="0."
+        }else{
+            if(!num2.includes(".")) num2+=".";
+        }
+
+    }else{
+
+        if(num1==""){
+            num1="0."
+        }else{
+            if(!num1.includes(".")) num1+=".";
+        }
+    }
+
+    display.textContent = `${num1} ${operator} ${num2}`;
 }
 
 
 
 let numbers = document.querySelectorAll(".number");
-numbers.forEach(number=> number.addEventListener("click",numberListener) );
+numbers.forEach(number => number.addEventListener("click", numberListener));
 
 let reset = document.querySelector(".reset");
-reset.addEventListener("click",resetCalculator);
+reset.addEventListener("click", resetCalculator);
 
 let deleteKey = document.querySelector(".delete");
-deleteKey.addEventListener("click",deleteLast);
+deleteKey.addEventListener("click", deleteLast);
 
 let operators = document.querySelectorAll(".operator");
-operators.forEach(operation=> operation.addEventListener("click",operationListener) );
+operators.forEach(operation => operation.addEventListener("click", operationListener));
 
 let equal = document.querySelector(".equals");
-equal.addEventListener("click",equals);
+equal.addEventListener("click", equals);
+
+let decimal = document.querySelector(".decimal");
+decimal.addEventListener("click",addDecimal );
 
 
 
