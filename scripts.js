@@ -44,16 +44,10 @@ function operate(operator, num1, num2) {
             break;
     }
 
-    return (result % 1 != 0) ? result.toFixed(4) : result;
+    return (result % 1 != 0) ? result.toFixed(2) : result;
 }
 
 function numberListener() {
-
-    if (display.textContent == "0" || clearDisplay) {
-        display.textContent = 0;
-        clearDisplay = false;
-    }
-
     if (operator) {
         if (num2 == "0") num2 = "";
         num2 = num2 + this.dataset.value;
@@ -84,12 +78,12 @@ function deleteLast() {
 
     if (num2) {
         num2 = num2.slice(0, -1);
-        display.textContent = `${num1} ${operator} ${num2}`;
 
         if (num2 == "") {
-            display.textContent = `${num1} ${operator}`;
             history.textContent = "";
         };
+
+        display.textContent = `${num1} ${operator} ${num2}`;
 
     } else if (operator) {
         operator = "";
@@ -133,7 +127,6 @@ function operationListener() {
 
     if (!operator && (num1 && num1!="-" ) ) {
         operator = this.dataset.value;
-        clearDisplay = true;
         display.textContent = `${num1} ${operator} ${num2}`;
 
     } else if (operator && num1 && (num2 && num2!="-" ) ) {
