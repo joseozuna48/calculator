@@ -136,6 +136,7 @@ function operationListener(operation) {
         //we use result value because equals assigns the value to the result variable
         //and currently num1 == ""
         display.textContent = `${result} ${operator}`;
+        num1=result;
 
     } 
 
